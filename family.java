@@ -50,16 +50,26 @@ public class family {
 			boolean visited[] = new boolean[indexes.size()];
 			String person1 = scanner.next();
 			String person2 = scanner.next();
+			int person1Index;
+			int person2Index;
 			
-			int person1Index = indexes.get(person1);
-			int person2Index = indexes.get(person2);
+			
+			if(indexes.containsKey(person1)&&indexes.containsKey(person2)) {
+				person1Index = indexes.get(person1);
+				person2Index = indexes.get(person2);
+			}
+			else {
+				person1Index = 0;
+				person2Index = -1;
+			}
+			
 			
 			target = person2Index;
 			
 			if (dfs(person1Index, visited)) {
 				System.out.printf("Family #%d: Related.%n", familynum);
 			} else {
-				System.out.printf("Family #%d: Not Related.%n", familynum);
+				System.out.printf("Family #%d: Not related.%n", familynum);
 			}
 			
 			connections = scanner.nextInt();
