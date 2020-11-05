@@ -42,8 +42,11 @@ public class craft {
 		    if(graph[height+1][length][width]=='.') {
 			    return dfs(height+1, length, width)+1;
 		    }
+		    else if(graph[height+1][length][width] != '*'){
+			    return dfs(height,length+1,width) + dfs(height,length-1, width) + dfs(height,length, width+1) + dfs(height,length, width-1) +1;
+		    }
 		    else {
-			    return dfs(height,length+1,width) + dfs(height,length-1, width) + dfs(height,length, width+1) + dfs(height,length, width-1)+1;
+		    	return 1;
 		    }
 		}
 		
