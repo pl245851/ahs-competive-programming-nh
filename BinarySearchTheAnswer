@@ -1,0 +1,96 @@
+import java.util.List;
+import java.util.Scanner;
+
+public class BinarySearchTheAnswer {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+	}
+	
+	public double sqrt(double x) {
+		double EPSILON = 1e-7;
+		double low = 0;
+		double high = 1e9;
+		
+		while (true) {
+			double mid = (low + high) / 2;
+			if (Math.abs(mid * mid - x) < EPSILON) {
+				return mid;
+			}
+			
+			if (mid * mid < x) {
+				low = mid;
+			} else {
+				high = mid;
+			}
+		}
+		
+		return NaN;
+	}
+	
+	public int minTankToCrossDesert(List<String> events) {
+		int low = 0;
+		int high = Integer.MAX_VALUE;
+		
+		while (low < high) {
+			int mid = low + (high - low) / 2;
+			
+			if (canCrossDesert(mid, events)) {
+				high = mid;
+			} else {
+				low = mid + 1;
+			}
+		}
+		
+		return low;
+	}
+	
+	public boolean canCrossDesert(int tankSize, List<String> events) {
+		// Do simulation
+		return true;
+	}
+	
+	public int minStrengthToClimbLadder(int[] heights) {
+		int low = 0;
+		int high = 10_000_000;
+		
+		while (low < high) {
+			int mid = low + (high - low) / 2;
+			
+			if (canClimbLadder(mid, heights)) {
+				high = mid;
+			} else {
+				low = mid + 1;
+			}
+		}
+		
+		return low;
+	}
+	
+	
+	public boolean canClimbLadder(int strength, int[] heights) {
+		int currentHeight = 0;
+		for (int i = 0; i < heights.length; i++) {
+			int jumpHeight = heights[i] - currentHeight;
+			if (strength < jumpHeight) {
+				return false;
+			} else if (strength == jumpHeight) {
+				strength--;
+			}
+			
+			currentHeight = heights[i];
+		}
+		
+		return true;
+	}
+	
+	/*
+	
+	k = 4
+	
+	0, 1, 6, 7, 11, 13
+	 1   
+	
+	
+	 */
+
+}
