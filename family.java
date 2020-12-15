@@ -84,7 +84,9 @@ public class family {
 		}
 		for(int i = 0; i<adjacencyList.get(index).size(); i++) {
 			if (!visited[adjacencyList.get(index).get(i)]) {
-				return dfs(adjacencyList.get(index).get(i), visited);
+				if( dfs(adjacencyList.get(index).get(i), visited)) {
+					return true;
+				}
 			}
 		}
 		return false;

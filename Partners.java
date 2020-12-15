@@ -11,7 +11,7 @@ public class Partners {
 		int connections = scanner.nextInt();
 		int requests = scanner.nextInt();
 		int year = 0;
-		while(!(connections == 0 && requests == 0)) {
+		while((connections != 0 || requests != 0)) {
 			TreeMap<String, Integer> indexes = new TreeMap<>();
 			List<Edge> edges = new ArrayList<Edge>();
 			for (int i = 0; i < connections; i++) {
@@ -36,18 +36,24 @@ public class Partners {
 			System.out.printf("Year %d:%n",year+2020);
 			for (int i = 0; i < requests; i++) {
 				String request = scanner.next();
-				
-				if(indexes.containsKey("AHS")&&(disjointSet.find(indexes.get(request)) == disjointSet.find(indexes.get("AHS")))) {
+				if(request.equals("AHS")) {
+					System.out.printf("%s is already a partner!%n", request);
+				}
+				else if(indexes.containsKey("AHS")&&indexes.containsKey(request)&&(disjointSet.find(indexes.get(request)) == disjointSet.find(indexes.get("AHS")))) {
 					System.out.printf("%s is already a partner!%n", request);
 				}
 				else {
 					System.out.printf("%s is a good investment!%n", request);
 				}
 			}
-			System.out.println();
+			
 			year++;
 			connections = scanner.nextInt();
 			requests = scanner.nextInt();
+			if(connections!=0 || requests!=0) {
+				System.out.println();
+			}
+				
 		}
 
 	}
@@ -122,14 +128,29 @@ ESPN FoxSportsFlorida
 FoxSportsFlorida FoxStudios
 FoxSportsFlorida
 FoxStudios
-5 2
-FoxStudios KoolAid
+5 3
+FoxStudios AHS
 FoxStudios ESPN
 FoxStudios ABC
 ESPN FoxSportsFlorida
 MinuteMaid KoolAid
 FoxSportsFlorida
-KoolAid
+KoolAide
+ABC
+10 3
+A F
+B A
+C B
+D C
+E D
+E B
+B G
+G H
+I H
+I J
+J
+AHS
+B
 0 0
 
 */

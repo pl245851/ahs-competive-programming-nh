@@ -54,6 +54,7 @@ public class box {
 					if(!(p.y+movey[i]<0||p.y+movey[i]>=height||p.x+movex[i]<0||p.x+movex[i]>=width)) {
 						if(!visited[p.y+movey[i]][p.x+movex[i]]) {
 							queue.add(new point(p.y+movey[i],p.x+movex[i],map[p.y+movey[i]][p.x+movex[i]],p.dist+1));
+							visited[p.y+movey[i]][ p.x+movex[i]] = true;
 						}	
 					}
 				}

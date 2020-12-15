@@ -1,74 +1,41 @@
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-import java.util.TreeMap;
+public class YoYo {
 
-public class UVA11747 {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		int nodeCount = scanner.nextInt();
-		int edgeCount = scanner.nextInt();
-		while(!(nodeCount == 0)&&!(edgeCount==0)) {
-			// We don't actually have to build much of a graph,
-			//   we just need to track all of the edges.
+		int cases = scanner.nextInt();
+		for(int c = 0; c<cases; c++) {
+			int tricks = scanner.nextInt();
+			int transitions = scanner.nextInt();
 			List<Edge> edges = new ArrayList<Edge>();
-			for (int i = 0; i < edgeCount; i++) {
-				int from = scanner.nextInt();
-				int to = scanner.nextInt();
+			for(int i = 0; i<transitions;i++) {
+				int from = scanner.nextInt()-1;
+				int to = scanner.nextInt()-1;
 				int weight = scanner.nextInt();
-				edges.add(new Edge(from, to, weight));
+				edges.add(new Edge(from,to,weight));
 			}
-		
 			Collections.sort(edges);
-			ArrayList<Integer> removedw = new ArrayList<Integer>();
-			// Total weight of the tree
-			int totalWeight = 0;
-		
-			// We need some form of data structure to know when we might make a cycle.
-			DisjointSet disjointSet = new DisjointSet(nodeCount);
-			for (int i = 0; i < edgeCount; i++) {
+			int totalweight = 0;
+			DisjointSet disjointSet = new DisjointSet(tricks);
+			for (int i = 0; i < edges.size(); i++) {
 				Edge edge = edges.get(i);
-				
 				if(disjointSet.find(edge.to) == disjointSet.find(edge.from)) {
-					totalWeight = totalWeight + edge.weight;
-					removedw.add(edge.weight);
-					// which parent's cycle is this
-					//this parent's cycle is new highest weight
+					continue;
 				}
 				else {
 					disjointSet.union(edge.to,edge.from);
-				}
-				// Check if including this edge will make a cycle.
-				// If it will, skip it.
-				// If it won't, include it.
-			}
-			Collections.sort(removedw);
-			if(totalWeight == 0) {
-				System.out.printf("forest%n");
-			}
-			else{
-				while(!removedw.isEmpty()) {
-					System.out.printf("%d",removedw.get(0));
-					removedw.remove(0);
-					if(!removedw.isEmpty()) {
-						System.out.printf(" ");
-					}
-					if(removedw.isEmpty()) {
-						System.out.printf("%n");
-					}
+					totalweight+=edge.weight;
 				}
 			}
-			nodeCount = scanner.nextInt();
-			edgeCount = scanner.nextInt();
-			}
-		}	
+			System.out.printf("Talent show #%d will yield %d amazement!%n",c+1,totalweight);
+		}
+	}
 	
-	// The DisjointSet keeps track of the "parent" of each node.
-	// By default, the parent of each node should be themselves.
-	public static class DisjointSet {
-		
+	
+	public static class DisjointSet {	
 		int[] rank;
 		int[] parents;
 		public DisjointSet(int nodes) {
@@ -100,11 +67,12 @@ public class UVA11747 {
 		public void union(int a, int b) {
 			if (rank[a] > rank[b]) {
 				parents[find(b)] = a;
-				rank[a]++;
 				// Make B's parent A
 			} else {
 				parents[find(a)] = b;
-				rank[b]++;
+				if(rank[a]==rank[b]) {
+					rank[b]++;
+				}
 			}
 		}
 	}
@@ -123,23 +91,8 @@ public class UVA11747 {
 		}
 		
 		public int compareTo(Edge o) {
-			return this.weight - o.weight;
+			return o.weight - this.weight;
 		}
 		
 	}
 }
-/*
-3 3
-0 1 1
-1 2 2
-2 0 3
-4 5
-0 1 1
-1 2 4
-2 3 3
-3 1 2
-0 2 0
-3 1
-0 1 1
-0 0
-*/
