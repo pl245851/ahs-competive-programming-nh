@@ -1,10 +1,14 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class xkcd {
 
 	static int length;
 	static char[] alpha = {'b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','z'};
+	static List<String> ans;
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		length = scanner.nextInt();
@@ -20,8 +24,12 @@ public class xkcd {
 			}
 			else {
 				System.out.printf("XKCD-like name(s) of length: %d%n", length);
-				
+				ans = new ArrayList<>();
 				permute(index,0,usetemp);
+				Collections.sort(ans);
+				for(int i = 0; i<ans.size(); i++) {
+					System.out.println(ans.get(i));
+				}
 				
 			}
 			length = scanner.nextInt();
@@ -39,11 +47,14 @@ public class xkcd {
 		}
 		
 		// Place all possibilities of unused indexes into the array
-		for (int i = 0; i < indexes.length; i++) {
+		for (int i = index; i < indexes.length; i++) {
 			// Check if we haven't included this index yet
 			if (!used[i]) {
 				// Generate a permutation with i in this index
-				used[i] = true;
+				for(int j = 0; j<=i;j++) {
+					used[j] = true;
+				}
+				
 				indexes[index] = i;
 				
 				permute(indexes, index + 1, used);
@@ -51,7 +62,9 @@ public class xkcd {
 				
 				// Remove i from used to allow it to be used in
 				// future permutations.
-				used[i] = false;
+				for(int j = 0; j<=i;j++) {
+					used[j] = false;
+				}
 			}
 		}
 	}
@@ -71,7 +84,7 @@ public class xkcd {
 		
 		int sum = 0;
 		for (int i = length-1; i >= 0; i--) {
-			sum += alpha[indexes[i]]-96;
+			sum += alpha[indexes[i]]- 'a' +1;
 			if(i == 1) {
 				sb.append(alpha[indexes[0]]);
 			}
@@ -85,7 +98,31 @@ public class xkcd {
 		}
 		
 		if(sum == 42) {
-			System.out.printf("%s%n", sb);
+			ans.add(sb.toString());
 		}
 	}
 }
+
+
+/*
+		for (int i = index; i < indexes.length; i++) {
+			// Check if we haven't included this index yet
+			if (!used[i]) {
+				// Generate a permutation with i in this index
+				for(int j = 0; j<=i;j++) {
+					used[j] = true;
+				}
+				
+				indexes[index] = i;
+				
+				permute(indexes, index + 1, used);
+				
+				
+				// Remove i from used to allow it to be used in
+				// future permutations.
+				for(int j = 0; j<=i;j++) {
+					used[j] = false;
+				}
+			}
+		}
+*/
