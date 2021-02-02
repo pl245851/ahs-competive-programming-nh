@@ -9,7 +9,7 @@ public class chief {
 		int cases = scanner.nextInt();
 		for(int c = 0; c< cases; c++) {
 			int problems = scanner.nextInt();
-			double radius = scanner.nextDouble();
+			double area = Math.pow(scanner.nextDouble(),3)*4*3.141592653589793/3;
 			ArrayList<box> nums = new ArrayList<>();
 			for(int i =0; i< problems; i++) {
 				nums.add(new box(scanner.nextDouble(),scanner.nextDouble(),scanner.nextDouble()));
@@ -17,12 +17,12 @@ public class chief {
 			Collections.sort(nums);
 			boolean possible = true;
 			for(int i =0; i< problems; i++) {
-				if(radius<=nums.get(i).h) {
+				if(Math.pow(area*3/4/3.141592653589793,1/3)<=nums.get(i).h/2) {
 					possible = false;
 					break;
 				}
 				else {
-					radius = Math.sqrt(radius*radius + 3*nums.get(i).area/(4*3.141592653589793));
+					area = area + nums.get(i).area;
 				}
 			}
 			if(!possible) {
@@ -49,10 +49,27 @@ public class chief {
 	}
 
 	public int compareTo(box o) {
-		return (int) (this.h - o.h);
+		return Double.compare(this.h, o.h);
 	}
 	
 	}
 	
 }
+
+/*
+2
+4 5.0
+10.0 10.0 10.0
+10.0 10.0 10.0
+10.0 10.0 10.0
+10.0 10.0 10.0
+6 5.0
+20.0 20.0 1.0
+20.0 20.0 2.0
+20.0 20.0 3.0
+20.0 20.0 4.0 
+20.0 20.0 5.0
+20.0 20.0 11.0
+
+ */
 
