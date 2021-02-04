@@ -17,7 +17,9 @@ public class chief {
 			Collections.sort(nums);
 			boolean possible = true;
 			for(int i =0; i< problems; i++) {
-				if(Math.pow(area*3/4/3.141592653589793,1/3)<=nums.get(i).h/2) {
+				double subarea = area*3/4/3.141592653589793;
+				double rad = Math.cbrt(subarea);
+				if(rad<=nums.get(i).h/2) {
 					possible = false;
 					break;
 				}
