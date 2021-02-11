@@ -1,17 +1,20 @@
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.TreeSet;
 
 public class UVA487 {
-	static int movex[] = {1,1,1,0,0,-1,-1,-1};
-	static int movey[] = {1,0,-1,1,-1,1,0,-1};
+	static int movex[] = {1,1, 1,0, 0,-1,-1,-1};
+	static int movey[] = {1,0,-1,1,-1, 1, 0,-1};
 	static char map[][];
-	static TreeSet<String> set;
+	static List<String> set;
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		int cases = scanner.nextInt();
 		for(int c = 0; c< cases; c++) {
-			set = new TreeSet<>();
+			set = new ArrayList<>();
 			int length = scanner.nextInt();
 			map = new char[length][length];
 			for(int i = 0; i<length; i++) {
@@ -25,8 +28,12 @@ public class UVA487 {
 					search("",i,j);
 				}
 			}
+			Collections.sort(set);
+			Comparator<String> sizefirst = (String o1, String o2) -> o1.length()-( o2.length());
+			Collections.sort(set, sizefirst );
+			
 			for(int i = 0; i<set.size();i++) {
-				System.out.printf("%s%n", set.pollFirst());
+				System.out.printf("%s%n", set.get(i));
 			}
 			System.out.printf("%n");
 		}
@@ -51,8 +58,12 @@ public class UVA487 {
 				pass = false;
 			}
 		}
+		//System.out.printf("%s%b%n", word, pass);
 		if(pass&&word.length()>2) {
-			set.add(word);
+			if(!set.contains(word)) {
+				set.add(word);
+				//System.out.printf("%s%b%n", word, pass);
+			}
 		}
 		return pass;
 	}
