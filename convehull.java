@@ -1,19 +1,33 @@
-import java.util.Scanner;
+import java.util.Arrays;
+import java.util.List;
 
-public class bird {
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		int cases = scanner.nextInt();
-		for(int c= 0 ; c< cases; c++) {
-			int dist = scanner.nextInt();
-			int sides = scanner.nextInt();
-			Vector[] walls = new Vector[sides];
-			for(int i = 0; i< sides; i++) {
-				walls[i] = new Vector(scanner.nextInt(), scanner.nextInt());
+public class convehull {
+	
+	public static List<Vector> convexhull(Vector[] points){
+		Arrays.sort(points);
+		
+		Vector[] lower = new Vector[points.length];
+		int index = 0;
+		for(Vector v : points) {
+			if(index<2) {
+				lower[index++] = v;
+				continue;
+			}
+			Vector previous = lower[index-1].subtract(lower[index-2]);
+			
+			if(previous.cross(v)>0) {
+				lower[index++] = v;
+			}
+			else {
+				do {index--;
+				
+				}while(index>=2 && lower[index-1].subtract(lower[index-2]).cross(v)<0);
 			}
 			
+			lower[index++] = v;
 		}
 	}
+	
 	public static class Vector {
 		double x, y;
 		
@@ -66,13 +80,4 @@ public class bird {
         		
         		
 	}
-	
-//	public static double area(Vector[] points) {
-//		double total = 0; 
-//		for (int i = 0; i <points.length; i++) {
-//			
-//		}
-//	}
-	
-	
 }
