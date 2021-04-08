@@ -22,6 +22,7 @@ public class adventure {
 				String options = scanner.nextLine();
 				if(options.equals("ENDING")) {
 					starts.add(i);
+					continue;
 				}
 				for( String j : options.split(" ")) {
 					map[Integer.valueOf(j)-1][i] = 1;
@@ -31,6 +32,7 @@ public class adventure {
 			for(int i : starts) {
 				max = Math.max(max, go(i));
 			}
+			System.out.printf("Book #%d: The longest story is %d pages.%n",c+1 , max);
 		}
 	}
 	
@@ -43,13 +45,13 @@ public class adventure {
 			return memo[index];
 		}
 		
-		memo[index] = math
-		
 		for(int i = 0 ; i< memo.length; i++) {
 			if(map[index][i]==1) {
-				memo[i] = Math.max();
+				memo[index] = Math.max(memo[index],go(i)+1);
+			
 			}
 		}
+		return memo[index];
 		
 	}
 
