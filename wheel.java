@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -5,7 +6,7 @@ import java.util.TreeMap;
 public class wheel {
 
 	static int[] memo;
-	static int[][] map;
+	static ArrayList<Integer>[] map;
 	
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
@@ -14,10 +15,12 @@ public class wheel {
 			int words = scanner.nextInt();
 			memo = new int[words*2];
 			Arrays.fill(memo, 0);
-			map = new int[words*2][words*2];
+			map = new ArrayList[words*2];
 			scanner.nextLine();
 			TreeMap<String, Integer> dict = new TreeMap<>();			
-			
+			for(int i  = 0; i< words*2; i++) {
+				map[i] = new ArrayList<>();
+			}
 			for(int i = 0 ; i< words; i++) {
 				String sentence = scanner.nextLine();
 				String[] split  = sentence.split(" ");
@@ -29,24 +32,20 @@ public class wheel {
 					//System.out.println(split[split.length-1]);
 					dict.put(split[split.length-1], dict.size());
 				}
-				map[dict.get(split[0])][dict.get(split[split.length-1])] = 1;
+				map[dict.get(split[0])].add(dict.get(split[split.length-1]));
 			}
 			
 			int max = 0;
 			for(int i  = 0 ; i< words; i++) {
 				max = Math.max(max, go(i));
 			}
-			System.out.printf("Puzzle #%d: %d%n",c+1 , max+1);
+			System.out.printf("Puzzle #%d: %d%n",c+1 , max);
 		}
 
 	}
 	
 	public static int go(int index) {
-		int sum = 0;
-		for(int i = 0 ; i < memo.length; i++) {
-			sum+=map[i][index];
-		}
-		if(sum == 0) {
+		if(map[index].size() == 0) {
 			return 1;
 		}
 		
@@ -54,19 +53,17 @@ public class wheel {
 			return memo[index];
 		}
 		
-		for(int i = 0 ; i< memo.length; i++) {
-			if(map[index][i] == 1) {
-				memo[index] = Math.max(memo[index],go(i)+1);
-			
-			}
+		for(int i : map[index]) {
+			memo[index] = Math.max(memo[index],go(i)+1);
 		}
+		
 		return memo[index];
 		
 	}
 
 }
 /*
-3
+7
 5
 WHEEL OF FORTUNE
 FORTUNE COOKIE
@@ -82,4 +79,40 @@ HI MY
 MY NAME
 NAME IS
 IS REGGIE
+6
+HELLO FROM
+HELLO THERE
+FROM THE
+THERE GENERAL
+THE OTHER
+GENERAL KENOBI
+6
+THE OTHER
+GENERAL KENOBI
+FROM THE
+THERE GENERAL
+HELLO FROM
+HELLO THERE
+10
+BINARY TREE
+TREE FARM
+TREE MAN
+FARM ANIMALS
+MAN WOOD
+FARM HAND
+MAN BAT
+ANIMALS PLANET
+ANIMALS GALORE
+ANIMALS BONANZA
+10
+BINARY TREE
+TREE FARM
+TREE MAN
+FARM ANIMALS
+MAN WOOD
+FARM HAND
+MAN BAT
+ANIMALS PLANET
+ANIMALS GALORE
+ANIMALS MAN
 */
