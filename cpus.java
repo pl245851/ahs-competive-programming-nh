@@ -16,11 +16,24 @@ public class cpus {
 				prices[i][j] = scanner.nextInt();
 			}
 		}
-		System.out.println(go(0,0));
+		System.out.println(go(cpus,0));
 
 	}
 
-	private static int go(int cpusold, int merchantplace) {
+	static int go(int cpuleft, int merchantplace) {
+		if(cpuleft == 0) {
+			return 0;
+		}
+		if(merchantplace > prices.length) {
+			return 0;
+		}
+		
+		if(memo[cpuleft] != -1) {
+			return memo[cpuleft];
+		}
+		
+		for(int i = 0; i< )
+		
 		
 	}
 
